@@ -27,17 +27,24 @@ namespace laboratoriPizzeriaCampusExpress
             string cliente = txtCliente.Text.Trim();
 
             // Validar entrada
-            
-
+            if(txtCliente.Text = null){
+            txtCliente.Text = string.Format("cliente esta vacio", cliente);
+            return;
+            }
+ 
             // Agregar a la cola
+            colaPedidos.Enqueue("Jhonder");
+            colaPedidos.Enqueue("Anyela");
             
 
             // Registrar en la pila
+            pilaBitacora.Push(string.Format("Pedido: {0}", cliente));
+            
             
 
             // Limpiar campo y actualizar
             txtCliente.Clear();
-            lblEstado.Text = string.Format("✅ Pedido registrado para {0}", cliente);
+            lblEstado.Text = string.Format(" Pedido registrado para {0}", cliente);
             ActualizarUI();
         }
 
@@ -46,13 +53,13 @@ namespace laboratoriPizzeriaCampusExpress
         {
             if (colaPedidos.Count == 0)
             {
-                lblEstado.Text = string.Format("❌ No hay pedidos pendientes.");
+                lblEstado.Text = string.Format(" No hay pedidos");
                 return;
             }
 
             string cliente = colaPedidos.Dequeue();
-            pilaBitacora.Push(string.Format("ENTREGADO: {0}", cliente));
-            lblEstado.Text = string.Format("🍕 Pedido entregado a {0}", cliente);
+            pilaBitacora.Push(string.Format("Entregado: {0}", cliente));
+            lblEstado.Text = string.Format(" Pedido Entregado a {0}", cliente);
             ActualizarUI();
         }
 
@@ -61,7 +68,7 @@ namespace laboratoriPizzeriaCampusExpress
         {
             if (pilaBitacora.Count == 0)
             {
-                lblEstado.Text = string.Format("📭 No hay acciones para deshacer.");
+                lblEstado.Text = string.Format("No hay acciones para deshacer.");
                 return;
             }
 
@@ -70,7 +77,7 @@ namespace laboratoriPizzeriaCampusExpress
             if (ultimaAccion.StartsWith("PEDIDO:"))
             {
                 // Extraer nombre del cliente
-                
+            
                 // Reconstruir cola excluyendo ese pedido
                
                 colaPedidos.Clear();
@@ -79,7 +86,7 @@ namespace laboratoriPizzeriaCampusExpress
                     if (p != nombre)
                         colaPedidos.Enqueue(p);
                 }
-                lblEstado.Text = string.Format("↩️ Se deshizo el pedido de {0}", nombre);
+                lblEstado.Text = string.Format(" Se deshizo el pedido de {0}", nombre);
             }
             else if (ultimaAccion.StartsWith("ENTREGADO:"))
             {
@@ -87,11 +94,11 @@ namespace laboratoriPizzeriaCampusExpress
                
                 // Volver a encolar
                
-                lblEstado.Text = string.Format("↩️ Se deshizo la entrega a {0}", nombre);
+                lblEstado.Text = string.Format("Se deshizo la entrega a {0}", nombre);
             }
             else
             {
-                lblEstado.Text = string.Format("⚠️ Acción desconocida en bitácora.");
+                lblEstado.Text = string.Format(" Acción desconocida en bitácora.");
             }
 
             ActualizarUI();
@@ -102,7 +109,7 @@ namespace laboratoriPizzeriaCampusExpress
         {
             colaPedidos.Clear();
             pilaBitacora.Clear();
-            lblEstado.Text = string.Format("🧹 Sistema reiniciado.");
+            lblEstado.Text = string.Format(" Sistema reiniciado.");
             ActualizarUI();
         }
 
